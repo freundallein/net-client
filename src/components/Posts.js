@@ -22,8 +22,25 @@ class Posts extends React.Component {
     super(props);
     this.state = { 
       isOpen: false,
+      isLoading: false,
+      posts: null,
+      error: null
     };
     this.toggleModal = this.toggleModal.bind(this)
+  }
+
+  componentDidMount (){
+    this.setState({ isLoading: true });
+    fetch('http://0.0.0.0:8002/api/v0/posts')
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Something went wrong')
+        }
+      })
+      .then(data => this.setState({ posts: data, isLoading: false }))
+      .catch(error => this.setState({ error, isLoading: false }));
   }
 
   toggleModal () {
@@ -32,6 +49,13 @@ class Posts extends React.Component {
 
   render() {
     const posts = this.props.posts
+    const {isLoading, error}  = this.state;
+    if (error) {
+      return <p>{error.message}</p>;
+    }
+    if (isLoading) {
+      return <p>Loading ...</p>;
+    }
     return (
     <div>
       {isAllowed(this.props.user, ['posts_crud']) && 
