@@ -26,5 +26,8 @@
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.9"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^11.1.1",
+    "@ckeditor/ckeditor5-react": "^1.0.0"
+  }
 }

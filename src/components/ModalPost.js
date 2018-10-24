@@ -1,4 +1,7 @@
 import React from 'react';
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 // The gray background
 const backdropStyle = {
 position: 'fixed',
@@ -44,14 +47,15 @@ class ModalPost extends React.Component {
   handleTitleChange(event) {
     this.setState({title: event.target.value});
   }
-  handleDataChange(event) {
-    this.setState({data: event.target.value});
+  handleDataChange(event, editor) {
+    const data = editor.getData()
+    this.setState({data: data});
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log(this.state)
     if (this.validate()){
-      console.log(this.state)
       this.props.onClose();
     } else {
       console.log('Invalid payload')
@@ -79,11 +83,12 @@ class ModalPost extends React.Component {
                 <label htmlFor="title">Title:</label>
                 <input type="text" className="form-control" id="title" value={this.state.title} placeholder={"Print title"} onChange={this.handleTitleChange}/>
               </div>
-              <div className="form-group">
-                <label htmlFor="data">Post data:</label>
-                <textarea className="form-control" rows="15" id="data" value={this.state.data} placeholder={"Write your post here."} onChange={this.handleDataChange}></textarea>
-              </div>
-              <button type="submit" className="btn btn-success">Post</button>
+              <CKEditor
+                    editor={ ClassicEditor }
+                    data={this.state.data}
+                    onChange={ this.handleDataChange }
+                />
+                <button type="submit" className="btn btn-success">Post</button>
             </form>
         </div>
       </div>
