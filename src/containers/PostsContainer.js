@@ -20,6 +20,10 @@ class PostsContainer extends React.Component {
   }
 
   componentDidMount (){
+    this.getPosts()
+  }
+  
+  getPosts(){
     this.setState({ isLoading: true });
     fetch('http://0.0.0.0:8002/api/v0/posts')
       .then(response => {
@@ -32,7 +36,19 @@ class PostsContainer extends React.Component {
       .then(data => this.setState({ posts: data, isLoading: false }))
       .catch(error => this.setState({ error, isLoading: false }));
   }
-
+  post(){
+    fetch('https://mywebsite.com/endpoint/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstParam: 'yourValue',
+        secondParam: 'yourOtherValue',
+      })
+    })
+  }
 
   render() {
       //   const posts = this.state.posts;
