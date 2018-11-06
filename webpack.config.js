@@ -26,15 +26,15 @@ module.exports = {
         ]
     },
     plugins: [
-      new HtmlWebPackPlugin({
-        template: "./src/index.html",
-        filename: "./index.html"
-      })
+      // new HtmlWebPackPlugin({
+      //   template: "./src/index.html",
+      //   filename: "./index.html"
+      // })
     ],
     output: {
-        path: __dirname + '/dist',
+        path: '/storage/projects/netfreund/static',
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'client.js'
       },
       devServer: {
         contentBase: './dist'
