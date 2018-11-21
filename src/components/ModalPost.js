@@ -19,9 +19,11 @@ backgroundColor: '#fff',
 borderRadius: 5,
 maxWidth: 800,
 minHeight: 300,
+maxHeight: '100%',
 margin: '0 auto',
 padding: 30,
-position: 'relative'
+position: 'relative',
+overflow: 'scroll'
 };
 const xStyle = {
 position: 'absolute',
@@ -56,6 +58,7 @@ class ModalPost extends React.Component {
     event.preventDefault();
     console.log(this.state)
     if (this.validate()){
+      this.props.createPost(this.state)
       this.props.onClose();
     } else {
       console.log('Invalid payload')

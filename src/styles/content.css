@@ -12,6 +12,7 @@
 
 .middle {
     width: 50%;
+    overflow: 'scroll'
 }
 
 .content:after {

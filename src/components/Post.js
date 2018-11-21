@@ -26,12 +26,13 @@ class Post extends React.Component {
   }
 
   onDelete(){
-    console.log('delete')
+    this.props.deletePost(this.props.match.params.id)
+    this.props.history.goBack()
   }
 
   render() {
     const id = this.props.match.params.id
-    const post = this.props.posts.filter((item)=> item.objectID == id)[0]
+    const post = this.props.post
     return (
       <div>
           {isAllowed(this.props.user, ['posts_crud']) &&  
@@ -40,6 +41,7 @@ class Post extends React.Component {
             <button className="btn btn-danger" onClick={this.tryToDelete}>Delete post</button>
             <ModalPost 
                 show={this.state.isOpen} 
+                createPost={this.props.updatePost}
                 title={post.title}
                 data={post.data}
                 onClose={this.toggleModal}

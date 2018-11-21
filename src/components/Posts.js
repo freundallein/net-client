@@ -48,6 +48,7 @@ class Posts extends React.Component {
           <ModalPost 
             show={this.state.isOpen}
             onClose={this.toggleModal}
+            createPost={this.props.createPost}
           />
         </div>
       }
