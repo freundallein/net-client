@@ -16,13 +16,13 @@ const Menu = (props) => {
                 </ul>
                 {!isAuthenticated(props.user) &&
                     <ul className="nav navbar-nav navbar-right">
-                        <li><a href="#"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="#"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a href="#" onClick={()=> console.log('signup')}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li><a href="#" onClick={()=> console.log('login')}><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </ul>
                 }
                 {isAuthenticated(props.user) &&
                     <ul className="nav navbar-nav navbar-right">
-                        <li><a href="#">Logout <span className="glyphicon glyphicon-log-in"></span></a></li>
+                        <li><a href="#" onClick={()=> console.log('logout')}>Logout <span className="glyphicon glyphicon-log-in"></span></a></li>
                     </ul>
                 }
                 </div>

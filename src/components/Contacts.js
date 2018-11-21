@@ -1,8 +1,8 @@
 import React from 'react'
-const Contacts = () => (
+const Contacts = (props) => (
     <div>
       <h2>Contacts</h2>
-      Nothing here.
+      {props.page.text}
     </div>
   )
 

@@ -83,7 +83,6 @@ class ModalPost extends React.Component {
             </button>
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label htmlFor="title">Title:</label>
                 <input type="text" className="form-control" id="title" value={this.state.title} placeholder={"Print title"} onChange={this.handleTitleChange}/>
               </div>
               <CKEditor

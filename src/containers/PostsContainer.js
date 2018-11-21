@@ -27,10 +27,10 @@ class PostsContainer extends React.Component {
     } else {
     this.getPosts()
     }
-    console.log('request made')
   }
   
   getPosts(){
+    console.log('request made')
     this.setState({ isLoading: true });
     this.setState({ posts: postdata, isLoading: false })
     // fetch('http://0.0.0.0:8002/api/v0/posts')
@@ -46,6 +46,7 @@ class PostsContainer extends React.Component {
   }
 
   getPostById(id){
+    console.log('request made')
     this.setState({ isLoading: true });
     this.setState({ post: postdata[id - 1], isLoading: false })
     // fetch(`http://0.0.0.0:8002/api/v0/posts/${id}`)

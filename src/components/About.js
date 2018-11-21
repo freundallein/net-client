@@ -1,8 +1,8 @@
 import React from 'react'
-const About = () => (
+const About = (props) => (
     <div>
       <h2>About</h2>
-      Nothing here.
+      {props.page.text} or nothing.
     </div>
   )
 
