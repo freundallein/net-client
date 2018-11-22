@@ -5,5 +5,9 @@ export const isAuthenticated = user => {
   return !!user
 }
 
-export const isAllowed = (user, rights) =>
-  rights.some(right => user.rights.includes(right));
+export const isAllowed = (user, rights) => {
+  if (user) {
+    return rights.some(right => user.rights.includes(right));
+  }
+  return false;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import Posts from '../components/Posts'
+import Error from '../components/Error'
 import Post from '../components/Post'
 import { isAllowed } from '../auth/permissions'
 
@@ -22,14 +22,17 @@ class PostsContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.getPosts()
+    const id = Number(this.props.match.params.id)
+    if (id) {
+      this.getPostById(this.props.match.params.id)
+    }
   }
 
-  getPosts() {
+  getPostById(id) {
     console.log('request made')
     this.setState({ isLoading: true });
-    this.setState({ posts: postdata, isLoading: false })
-    // fetch('http://0.0.0.0:8002/api/v0/posts')
+    this.setState({ post: postdata[id - 1], isLoading: false })
+    // fetch(`http://0.0.0.0:8002/api/v0/posts/${id}`)
     //   .then(response => {
     //     if (response.ok) {
     //       return response.json();
@@ -37,13 +40,13 @@ class PostsContainer extends React.Component {
     //       throw new Error('Something went wrong')
     //     }
     //   })
-    //   .then(data => this.setState({ posts: data, isLoading: false }))
+    //   .then(data => this.setState({ post: data, isLoading: false }))
     //   .catch(error => this.setState({ error, isLoading: false }));
   }
 
-  createPost(user) {
+  updatePost(user) {
     return (post) => {
-      console.log(`create post ${user.name}-${post.title}-${post.data}-${post.published}`)
+      console.log(`update post ${user.name}-${post.title}-${post.data}-${post.published}`)
       // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
       //     method: 'PUT',
       //     body: JSON.stringify({
@@ -52,7 +55,18 @@ class PostsContainer extends React.Component {
       //       data: post.data,
       //     })
       // })
+      // .then(response => response.json())
     }
+  }
+
+  deletePost(id) {
+    console.log(`delete post ${id}`)
+    // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
+    //   method: 'DELETE',
+    //   body: JSON.stringify({
+    //     id: id,
+    //   })
+    // })
   }
 
   render() {
@@ -63,15 +77,17 @@ class PostsContainer extends React.Component {
     if (isLoading) {
       return <p>Loading ...</p>;
     }
-    var posts = []
-    if  (isAllowed(this.props.user, ['posts_crud'])){
-      posts = this.state.posts
-    } else if (this.state.posts) {
-      posts = this.state.posts.filter((item) => item['published'] === true);
+    const post = this.state.post
+    if (post && isAllowed(this.props.user, ['posts_crud'])) {
+      return <div><Post{...this.props} post={post}
+        updatePost={this.updatePost(this.props.user)}
+        deletePost={this.deletePost} /></div>
+    } else if (post && this.state.post['published'] === true) {
+      return <div><Post{...this.props} post={post}
+        updatePost={this.updatePost(this.props.user)}
+        deletePost={this.deletePost} /></div>
     }
-
-    return <div><Posts{...this.props} posts={posts}
-      createPost={this.createPost(this.props.user)} /></div>
+    return <Error {...this.props} error={"No such post"}/>
   }
 }
 

@@ -89,7 +89,7 @@ class ModalPost extends React.Component {
                 <input type="text" className="form-control" id="title" value={this.state.title} placeholder={"Print title"} onChange={this.handleTitleChange}/>
               </div>
               <label className="switch">
-                <input type="checkbox" onChange={this.handlePublishedChange} defaultChecked={this.state.published}/>
+                <input type="checkbox" onChange={this.handlePublishedChange} value={this.state.published} defaultChecked={this.state.published}/>
                 <span className="slider round"></span>
               </label><b>Published</b>
               <CKEditor
