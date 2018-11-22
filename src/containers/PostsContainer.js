@@ -1,6 +1,5 @@
 import React from 'react'
 import Posts from '../components/Posts'
-import Post from '../components/Post'
 import { isAllowed } from '../auth/permissions'
 
 const postdata = [

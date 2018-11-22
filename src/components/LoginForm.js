@@ -1,93 +1,52 @@
 import React from 'react';
-import ReactModalLogin from 'react-modal-login';
+
 
 class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      showModal: false,
-      loading: false,
-      error: null
-    };
-
+    this.state = {};
   }
 
-  openModal() {
-    this.setState({
-      showModal: true,
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      showModal: false,
-      error: null
-    });
-  }
-  
-  onLoginSuccess(method, response) {
-    console.log('logged successfully with ' + method);
-  }
-
-  onLoginFail(method, response) {
-    console.log('logging failed with ' + method);
-    this.setState({
-      error: response
-    })
-  }
-
-  startLoading() {
-    this.setState({
-      loading: true
-    })
-  }
-
-  finishLoading() {
-    this.setState({
-      loading: false
-    })
-  }
-
-  afterTabsChange() {
-    this.setState({
-      error: null
-    });
-  }
-
+  submitLogin(e) { }
 
   render() {
-
     return (
-      <div>
+      <div className="inner-container">
+        <div className="header">
+          Login
+        </div>
+        <div className="box">
 
-        <button
-          onClick={() => this.openModal()}
-        >
-          Open Modal
-        </button>
+          <div className="input-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              className="login-input"
+              placeholder="Username" />
+          </div>
 
-        <ReactModalLogin
-          visible={this.state.showModal}
-          onCloseModal={this.closeModal.bind(this)}
-          loading={this.state.loading}
-          error={this.state.error}
-          tabs={{
-            afterChange: this.afterTabsChange.bind(this)
-          }}
-          loginError={{
-            label: "Couldn't sign in, please try again."
-          }}
-          registerError={{
-            label: "Couldn't sign up, please try again."
-          }}
-          startLoading={this.startLoading.bind(this)}
-          finishLoading={this.finishLoading.bind(this)}
-        />
+          <div className="input-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              className="login-input"
+              placeholder="Password" />
+          </div>
+
+          <button
+            type="button"
+            className="login-btn"
+            onClick={this
+              .submitLogin
+              .bind(this)}>Login</button>
+        </div>
       </div>
-    )
+    );
   }
+
 }
 
-export default LoginForm;
+export default LoginForm

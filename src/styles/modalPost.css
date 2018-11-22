@@ -59,3 +59,34 @@
   .slider.round:before {
     border-radius: 50%;
   }
+
+.backdropStyle {
+    position: 'fixed';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: 'rgba(0,0,0,0.3)';
+    padding: 50;
+    }
+    
+
+    .backdropStyle .modalStyle {
+    background-color: '#fff';
+    border-radius: 5;
+    max-width: 800;
+    min-height: 300;
+    max-height: '100%';
+    margin: '0 auto';
+    padding: 30;
+    position: 'relative';
+    overflow: 'scroll';
+    };
+  
+    .backdropStyle .modalStyle .xStyle  {
+    position: 'absolute';
+    background: 'gray';
+    color: 'white';
+    top: '0px';
+    right: '0px';
+    }
