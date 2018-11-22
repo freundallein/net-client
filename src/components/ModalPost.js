@@ -1,7 +1,7 @@
 import React from 'react';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import content from '../styles/modalPost.css'
 // The gray background
 const backdropStyle = {
 position: 'fixed',
@@ -38,16 +38,20 @@ class ModalPost extends React.Component {
     super(props);
     this.state = {
       title: this.props.title,
-      data: this.props.data
+      data: this.props.data,
+      published : this.props.published
     };
-
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
+    this.handlePublishedChange = this.handlePublishedChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleTitleChange(event) {
     this.setState({title: event.target.value});
+  }
+  handlePublishedChange(event) {
+    this.setState({published: !this.state.published});
   }
   handleDataChange(event, editor) {
     const data = editor.getData()
@@ -56,7 +60,6 @@ class ModalPost extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state)
     if (this.validate()){
       this.props.createPost(this.state)
       this.props.onClose();
@@ -85,6 +88,10 @@ class ModalPost extends React.Component {
               <div className="form-group">
                 <input type="text" className="form-control" id="title" value={this.state.title} placeholder={"Print title"} onChange={this.handleTitleChange}/>
               </div>
+              <label className="switch">
+                <input type="checkbox" onChange={this.handlePublishedChange} defaultChecked={this.state.published}/>
+                <span className="slider round"></span>
+              </label><b>Published</b>
               <CKEditor
                     editor={ ClassicEditor }
                     data={this.state.data}

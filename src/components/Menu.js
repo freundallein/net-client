@@ -11,8 +11,9 @@ const Menu = (props) => {
                 <ul className="nav navbar-nav">
                     <li key='menu0'><NavLink to='/'>Home</NavLink></li>
                     <li key='menu1'><NavLink to='/posts'>Posts</NavLink></li>
+                    <li key='menu2'><NavLink to='/patterns'>Patterns</NavLink></li>
                     <li key='menu3'><NavLink to='/contacts'>Contacts</NavLink></li>
-                    <li key='menu2'><NavLink to='/about'>About</NavLink></li>
+                    <li key='menu4'><NavLink to='/about'>About</NavLink></li>
                 </ul>
                 {!isAuthenticated(props.user) &&
                     <ul className="nav navbar-nav navbar-right">

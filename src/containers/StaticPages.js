@@ -1,6 +1,7 @@
 import React from 'react'
 import About from '../components/About'
 import Contacts from '../components/Contacts'
+import Patterns from '../components/Patterns'
 
 const page = {'text': 'blahblahblah', 'slug':'contacts'}
 
@@ -50,6 +51,8 @@ class StaticPages extends React.Component {
         return <div><About{...this.props} page={page}/></div>
       } else if (slug === '/contacts'){
         return <div><Contacts{...this.props} page={page} /></div>
+      } else if (slug == '/patterns') {
+        return <div><Patterns{...this.props} page={page} /></div>
       }
     }
 }

@@ -3,6 +3,8 @@ const Contacts = (props) => (
     <div>
       <h2>Contacts</h2>
       {props.page.text}
+      <br/>
+      Nothing here.
     </div>
   )
 

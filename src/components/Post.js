@@ -44,6 +44,7 @@ class Post extends React.Component {
                 createPost={this.props.updatePost}
                 title={post.title}
                 data={post.data}
+                published={post.published}
                 onClose={this.toggleModal}
             />
           </div>}

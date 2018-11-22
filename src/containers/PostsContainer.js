@@ -1,12 +1,13 @@
 import React from 'react'
 import Posts from '../components/Posts'
 import Post from '../components/Post'
+import {isAllowed} from '../auth/permissions'
 
 const postdata = [
-    {objectID:1, date:"2018-02-02 11:44", author:"freund", title:"Post1", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
-    {objectID:2, date:"2018-02-02 12:44", author:"freund", title:"Post2", data: "We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
-    {objectID:3, date:"2018-02-02 13:44", author:"freund", title:"Post3", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component.. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
-    {objectID:4, date:"2018-02-02 14:44", author:"freund", title:"Post4", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component.. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
+    {objectID:1, published: true, date:"2018-02-02 11:44", author:"freund", title:"Post1", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
+    {objectID:2, published: true, date:"2018-02-02 12:44", author:"freund", title:"Post2", data: "We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
+    {objectID:3, published: false, date:"2018-02-02 13:44", author:"freund", title:"Post3", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component.. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
+    {objectID:4, published: true, date:"2018-02-02 14:44", author:"freund", title:"Post4", data: "If a component is using multiple mixins and several mixins define the same lifecycle method (i.e. several mixins want to do some cleanup when the component is destroyed), all of the lifecycle methods are guaranteed to be called. Methods defined on mixins run in the order mixins were listed, followed by a method call on the component.. We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. Check out Robin Pokorny’s article for an in-depth explanation on the negative impacts of using an index as a key. If you choose not to assign an explicit key to list items then React will default to using indexes as keys."},
   ]
 
 class PostsContainer extends React.Component {
@@ -63,7 +64,7 @@ class PostsContainer extends React.Component {
 
   createPost(userName){
     return (post) =>{
-    console.log(`create post ${userName}-${post.title}-${post.data}`)
+    console.log(`create post ${userName}-${post.title}-${post.data}-${post.published}`)
     // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
     //     method: 'PUT',
     //     body: JSON.stringify({
@@ -77,7 +78,7 @@ class PostsContainer extends React.Component {
 
   updatePost(userName){
     return (post) =>{
-    console.log(`update post ${userName}-${post.title}-${post.data}`)
+    console.log(`update post ${userName}-${post.title}-${post.data}-${post.published}`)
     // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
     //     method: 'PUT',
     //     body: JSON.stringify({
@@ -103,7 +104,6 @@ class PostsContainer extends React.Component {
   render() {
       const {isLoading, error}  = this.state;
       const userName = this.props.user.name
-      const id = Number(this.props.match.params.id)
       if (error) {
         return <p>{error.message}</p>;
       }
@@ -111,13 +111,24 @@ class PostsContainer extends React.Component {
         return <p>Loading ...</p>;
       }
       
-      if (id) {
+      if (this.state.post && this.state.post['published'] === true && !isAllowed(this.props.user, ['posts_crud'])) {
+        const post = this.state.post
+        return <div><Post{...this.props} post={post} 
+                                         updatePost={this.updatePost(userName)}
+                                         deletePost={this.deletePost} /></div>
+      } else if (this.state.post) {
         const post = this.state.post
         return <div><Post{...this.props} post={post} 
                                          updatePost={this.updatePost(userName)}
                                          deletePost={this.deletePost} /></div>
       }
-      const posts = this.state.posts;
+      var posts = []
+      if (this.state.posts && !isAllowed(this.props.user, ['posts_crud'])){
+        posts = this.state.posts.filter((item) => item['published'] === true);
+      } else {
+        posts = this.state.posts
+      }
+      
       return <div><Posts{...this.props} posts={posts} 
                                         createPost={this.createPost(userName)} /></div>
     }

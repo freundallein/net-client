@@ -5,12 +5,13 @@ import {isAllowed} from '../auth/permissions'
 
 
 
-const ShortPost = (post) => {
+const ShortPost = (post, user) => {
   const text = (post.data.length > 500)? post.data.substr(0, 500) : post.data;
   return (
       <li key={post.objectID}>
         <h3><NavLink to={'/posts/' + post.objectID}>{post.title}</NavLink></h3>
         <div>{post.date} - {post.author}</div>
+        {isAllowed(user, ['posts_crud']) && !post.published && <div><b>Not published</b></div>}
         <br/>
         <div>{text}&hellip;</div>
       </li>
@@ -53,7 +54,7 @@ class Posts extends React.Component {
         </div>
       }
       <ul>
-        {posts.map(post => ShortPost(post))} 
+        {posts.map(post => ShortPost(post, this.props.user))} 
       </ul>
     </div>)
   }

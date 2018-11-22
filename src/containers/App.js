@@ -26,6 +26,7 @@ const App = () => (
             <Route exact path="/" component={Home}/>
             <Route exact path="/posts" component={(props)=> <PostsContainer{...props} user={user}/>}/>
             <Route path="/posts/:id" component={(props)=> <PostsContainer{...props} user={user}/>}/>
+            <Route path="/patterns" component={(props)=> <StaticPages{...props} user={user}/>}/>
             <Route path="/contacts" component={(props)=> <StaticPages{...props} user={user}/>}/>
             <Route path="/about" component={(props)=> <StaticPages{...props} user={user}/>}/>
             <Redirect from='*' to='/' />
