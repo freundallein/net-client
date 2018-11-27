@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { isAuthenticated } from '../auth/permissions'
 import LoginForm from './LoginForm'
+
 class Menu extends React.Component {
     constructor(props) {
         super(props);
@@ -9,9 +10,9 @@ class Menu extends React.Component {
             isOpen: false,
         };
     }
-    toggleModal () {
-        this.setState({isOpen: !this.state.isOpen});
-      }
+    toggleModal() {
+        this.setState({ isOpen: !this.state.isOpen });
+    }
     render() {
         return <nav className="navbar navbar-inverse">
             <div className="container-fluid">
@@ -28,13 +29,13 @@ class Menu extends React.Component {
 
                 {!isAuthenticated(this.props.user) &&
                     <ul className="nav navbar-nav navbar-right">
-                        {/* <LoginForm user={this.props.user} /> */}
-                        <li><a href="#" onClick={() => console.log('signup')}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a href="#" onClick={() => console.log('login')}><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        {/* <li><a href="#" onClick={() => this.props.history.push('/signup')}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li> */}
+                        <li><a href="#" onClick={() => this.props.history.push('/login')}><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </ul>
                 }
                 {isAuthenticated(this.props.user) &&
                     <ul className="nav navbar-nav navbar-right">
+                        <li><a href="#">{this.props.user.name}</a></li>
                         <li><a href="#" onClick={() => this.props.logout()}>Logout <span className="glyphicon glyphicon-log-in"></span></a></li>
                     </ul>
                 }

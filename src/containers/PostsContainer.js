@@ -25,9 +25,9 @@ class PostsContainer extends React.Component {
   }
 
   getPosts() {
-    console.log('request made')
     this.setState({ isLoading: true });
     this.setState({ posts: postdata, isLoading: false })
+    console.log(`GET http://0.0.0.0:8002/api/v0/posts`)
     // fetch('http://0.0.0.0:8002/api/v0/posts')
     //   .then(response => {
     //     if (response.ok) {
@@ -43,6 +43,7 @@ class PostsContainer extends React.Component {
   createPost(user) {
     return (post) => {
       console.log(`create post ${user.name}-${post.title}-${post.data}-${post.published}`)
+      console.log(`POST http://0.0.0.0:8002/api/v0/posts`)
       // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
       //     method: 'PUT',
       //     body: JSON.stringify({

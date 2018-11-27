@@ -29,7 +29,7 @@ class PostsContainer extends React.Component {
   }
 
   getPostById(id) {
-    console.log('request made')
+    console.log(`GET http://0.0.0.0:8002/api/v0/posts/${id}`)
     this.setState({ isLoading: true });
     this.setState({ post: postdata[id - 1], isLoading: false })
     // fetch(`http://0.0.0.0:8002/api/v0/posts/${id}`)
@@ -47,6 +47,7 @@ class PostsContainer extends React.Component {
   updatePost(user) {
     return (post) => {
       console.log(`update post ${user.name}-${post.title}-${post.data}-${post.published}`)
+      console.log(`PUT http://0.0.0.0:8002/api/v0/posts`)
       // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
       //     method: 'PUT',
       //     body: JSON.stringify({
@@ -61,6 +62,7 @@ class PostsContainer extends React.Component {
 
   deletePost(id) {
     console.log(`delete post ${id}`)
+    console.log(`DELETE http://0.0.0.0:8002/api/v0/posts`)
     // fetch(`http://0.0.0.0:8002/api/v0/posts`, {
     //   method: 'DELETE',
     //   body: JSON.stringify({

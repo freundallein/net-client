@@ -3,7 +3,7 @@ import About from '../components/About'
 import Contacts from '../components/Contacts'
 import Patterns from '../components/Patterns'
 
-const page = {'text': 'blahblahblah', 'slug':'contacts'}
+
 
 class StaticPages extends React.Component {
   constructor(props) {
@@ -20,9 +20,8 @@ class StaticPages extends React.Component {
   }
 
   getPageBySlug(slug){
-    console.log('request made')
     this.setState({ isLoading: true });
-    this.setState({ page: page, isLoading: false })
+    this.setState({ page: {'text': '', 'slug':''}, isLoading: false })
     slug = slug.replace('/', '')
     console.log(`http://0.0.0.0:8002/api/v0/pages/${slug}`)
     // fetch(`http://0.0.0.0:8002/api/v0/pages/${slug}`)

@@ -9,21 +9,10 @@ import Home from '../components/Home'
 import PostsContainer from './PostsContainer'
 import PostContainer from './PostContainer'
 import StaticPages from './StaticPages'
+import LoginForm from '../components/LoginForm'
 import Error from '../components/Error'
 
-import { user1, user2 } from '../auth/user'
 import content from '../styles/content.css'
-
-// const user = user1
-
-const getUser = (user) => {
-  console.log('usered')
-  if (user) {
-    return user1
-  }
-  return user1
-}
-const user = getUser()
 
 class App extends React.Component {
   constructor(props) {
@@ -33,12 +22,12 @@ class App extends React.Component {
     };
   }
 
-  login() {
-    console.log('login')
+  login(user) {
+    this.setState({ user: user });
   }
 
   logout() {
-    console.log('logout')
+    this.setState({ user: null });
   }
 
   render() {
@@ -46,7 +35,7 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <Menu counter={1} user={user} logout={this.logout} login={this.login}/>
+          <Route path="/" component={(props) => <Menu{...props} user={user} logout={this.logout.bind(this)} />} />
           <div className='content'>
             <div className="column left"></div>
             <div className="column middle">
@@ -57,6 +46,8 @@ class App extends React.Component {
                 <Route path="/patterns" component={(props) => <StaticPages{...props} user={user} />} />
                 <Route path="/contacts" component={(props) => <StaticPages{...props} user={user} />} />
                 <Route path="/about" component={(props) => <StaticPages{...props} user={user} />} />
+                <Route path="/login" component={(props) => <LoginForm {...props} login={this.login.bind(this)} />} />
+                <Route path="/signup" component={(props) => <Error{...props} />} />
                 <Route path="/error" component={(props) => <Error{...props} />} />
                 <Redirect from='*' to='/' />
               </Switch>
