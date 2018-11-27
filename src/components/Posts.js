@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import ModalPost from './EditPost'
 import { isAllowed } from '../auth/permissions'
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -51,6 +52,17 @@ class Posts extends React.Component {
         {!this.state.isOpen &&
           <ul>
             {posts.map(post => ShortPost(post, this.props.user))}
+            <ReactPaginate previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.props.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.props.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"} />
           </ul>
         }
         {this.state.isOpen &&
