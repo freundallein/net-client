@@ -1,6 +1,5 @@
 import React from 'react';
-import CKEditor from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ReactQuill from 'react-quill'
 import content from '../styles/modalPost.css'
 
 
@@ -9,8 +8,8 @@ class ModalPost extends React.Component {
     super(props);
     this.state = {
       title: this.props.title,
-      data: this.props.data,
-      published: this.props.published
+      data: this.props.data || "",
+      published: this.props.published,
     };
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleDataChange = this.handleDataChange.bind(this);
@@ -21,12 +20,13 @@ class ModalPost extends React.Component {
   handleTitleChange(event) {
     this.setState({ title: event.target.value });
   }
+
   handlePublishedChange(event) {
     this.setState({ published: !this.state.published });
   }
-  handleDataChange(event, editor) {
-    const data = editor.getData()
-    this.setState({ data: data });
+
+  handleDataChange(html) {
+    this.setState({ data: html });
   }
 
   handleSubmit(event) {
@@ -44,10 +44,6 @@ class ModalPost extends React.Component {
   }
 
   render() {
-    // Render nothing if the "show" prop is false
-    if (!this.props.show) {
-      return null;
-    }
     return (
       <div className="backdropStyle">
         <div className="modalStyle">
@@ -59,10 +55,12 @@ class ModalPost extends React.Component {
               <input type="checkbox" onChange={this.handlePublishedChange} value={this.state.published} defaultChecked={this.state.published} />
               <span className="slider round"></span>
             </label><b>Published</b>
-            <CKEditor
-              editor={ClassicEditor}
-              data={this.state.data}
+            <ReactQuill
+              value={this.state.data}
               onChange={this.handleDataChange}
+              modules={ModalPost.modules}
+              formats={ModalPost.formats}
+              placeholder={"Write your text here."}
             />
             <button type="submit" className="btn btn-success">Post</button>
           </form>
@@ -72,5 +70,26 @@ class ModalPost extends React.Component {
   }
 }
 
+ModalPost.modules = {
+  toolbar: [
+    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' },
+    { 'indent': '-1' }, { 'indent': '+1' }],
+    ['link', 'image'],
+    ['clean']
+  ],
+  clipboard: {
+    matchVisual: false,
+  }
+}
+
+ModalPost.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image'
+]
 
 export default ModalPost;

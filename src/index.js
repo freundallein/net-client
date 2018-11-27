@@ -5,4 +5,3 @@ import App from './containers/App'
 
 const target = document.getElementById('root');
 render(<App/>,target);
-

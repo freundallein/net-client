@@ -28,6 +28,7 @@ class App extends React.Component {
 
   logout() {
     this.setState({ user: null });
+    console.log(`POST http://0.0.0.0:8002/api/v0/logout`)
   }
 
   render() {

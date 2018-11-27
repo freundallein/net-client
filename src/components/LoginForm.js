@@ -30,7 +30,8 @@ class LoginForm extends React.Component {
     if (this.validate()) {
       console.log(`POST http://0.0.0.0:8002/api/v0/login`)
       this.props.login(user1)
-      this.props.history.push('/')
+      this.props.history.goBack()
+      this.props.history.goBack()
       // fetch(`http://0.0.0.0:8002/api/v0/login`, {
       //     method: 'POST',
       //     body: JSON.stringify({
@@ -50,15 +51,15 @@ class LoginForm extends React.Component {
         <div className="container">
           <div id="login-row" className="row justify-content-center align-items-center">
             <div id="login-column" className="col-md-6">
-              <div class="login-box col-md-12">
+              <div className="login-box col-md-12">
                 <form id="login-form" className="form" onSubmit={this.handleSubmit}>
                   <h3 className="text-center text-dark">Login</h3>
                   <div className="form-group">
-                    <label for="username" className="text-dark">Username:</label><br />
+                    <label htmlFor="username" className="text-dark">Username:</label><br />
                     <input type="text" name="username" id="username" className="form-control" onChange={this.handleUsernameChange}/>
                   </div>
                   <div className="form-group">
-                    <label for="password" className="text-dark">Password:</label><br />
+                    <label htmlFor="password" className="text-dark">Password:</label><br />
                     <input type="text" name="password" id="password" className="form-control" onChange={this.handlePasswordChange} />
                   </div>
                   <div className="form-group">
